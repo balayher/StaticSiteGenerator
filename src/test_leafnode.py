@@ -11,7 +11,6 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode(None, "test is here", htmldict)
         node2 = node.to_html()
         self.assertEqual(str_node, node2)
-        print(node2)
 
         htmldict = {
             "href": "https://www.google.com",
@@ -21,7 +20,6 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode("p", "test is here", None)
         node2 = node.to_html()
         self.assertEqual(str_node, node2)
-        print(node2)
 
         htmldict = {
             "href": "https://www.google.com",
@@ -31,8 +29,6 @@ class TestLeafNode(unittest.TestCase):
         node = LeafNode("a", "test is here", htmldict)
         node2 = node.to_html()
         self.assertNotEqual(str_node, node2)
-        print(node2)
-
 
         
 if __name__ == "__main__":
