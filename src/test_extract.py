@@ -1,5 +1,5 @@
 import unittest
-from extract import extract_markdown_images, extract_markdown_links
+from extract import extract_markdown_images, extract_markdown_links, extract_title
 
 
 class TestExtract(unittest.TestCase):
@@ -14,6 +14,21 @@ class TestExtract(unittest.TestCase):
         extracted = extract_markdown_links(text)
         test_tuple = [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
         self.assertEqual(extracted, test_tuple)
+
+    def test_extract_title(self):
+        text = "# This is a header"
+        title = extract_title(text)
+        test = "This is a header"
+        self.assertEqual(title, test)
+
+        text = """# This is a header
+With a lot of other text
+that we don't want added
+to the file
+"""
+        title = extract_title(text)
+        test = "This is a header"
+        self.assertEqual(title, test)
         
 
 if __name__ == "__main__":
