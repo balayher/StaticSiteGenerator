@@ -29,23 +29,22 @@ def split_nodes_images(old_nodes):
         if old_node.text_type != TextType.TEXT:
             new_nodes.append(old_node)
             continue
-        images = extract_markdown_images(old_node.text)
-        iterating_node = old_node
+        original_text = old_node.text
+        images = extract_markdown_images(original_text)
         if len(images) == 0:
-            new_nodes.append(iterating_node)
+            new_nodes.append(old_node)
             continue
         for image in images:
-            sections = iterating_node.text.split(f"![{image[0]}]({image[1]})", 1)
-            iterating_node = TextNode(sections[1], TextType.TEXT)
+            sections = original_text.split(f"![{image[0]}]({image[1]})", 1)
             if len(sections) != 2:
                 raise ValueError("Invalid: Image not closed")
             if sections[0] != "":
-                to_add = TextNode(sections[0], TextType.TEXT)
-                new_nodes.append(to_add)
+                new_nodes.append(TextNode(sections[0], TextType.TEXT))
             to_add = TextNode(image[0], TextType.IMAGE, image[1])
             new_nodes.append(to_add)
-        if iterating_node.text != "":
-            new_nodes.append(iterating_node)
+            original_text = sections[1]
+        if original_text != "":
+            new_nodes.append(TextNode(original_text, TextType.TEXT))
     return new_nodes
 
 def split_nodes_links(old_nodes):

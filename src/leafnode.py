@@ -5,10 +5,10 @@ class LeafNode(HTMLNode):
         super().__init__(tag, value, None, props)
         
     def to_html(self):
-        if not self.value:
+        if self.value is None:
             raise ValueError("Value not found")
     
-        if not self.tag:
+        if self.tag is None:
             return self.value
         props_string = self.props_to_html()
         return f'<{self.tag}{props_string}>{self.value}</{self.tag}>'
